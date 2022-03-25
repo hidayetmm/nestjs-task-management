@@ -52,4 +52,12 @@ export class TasksService {
     this.tasks.push(task);
     return task;
   }
+
+  deleteTaskById(id: string): Task[] {
+    const index = this.tasks.findIndex(function (task) {
+      return task.id === id;
+    });
+    if (index !== -1) this.tasks.splice(index, 1);
+    return this.tasks;
+  }
 }
