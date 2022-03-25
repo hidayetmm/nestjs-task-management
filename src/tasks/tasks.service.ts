@@ -12,13 +12,35 @@ export class TasksService {
       description: 'Description 1',
       status: TaskStatus.IN_PROGRESS,
     },
+    {
+      id: '2',
+      title: 'Task 2',
+      description: 'Description 2',
+      status: TaskStatus.IN_PROGRESS,
+    },
+    {
+      id: '3',
+      title: 'Task 3',
+      description: 'Description 3',
+      status: TaskStatus.IN_PROGRESS,
+    },
+    {
+      id: '4',
+      title: 'Task 4',
+      description: 'Description 4',
+      status: TaskStatus.IN_PROGRESS,
+    },
   ];
 
-  getAllTasks() {
+  getAllTasks(): Task[] {
     return this.tasks;
   }
 
-  createTask(createTaskDto: CreateTaskDto) {
+  getTaskById(id: string): Task {
+    return this.tasks.find((task) => task.id === id);
+  }
+
+  createTask(createTaskDto: CreateTaskDto): Task {
     const { title, description } = createTaskDto;
     const task: Task = {
       id: uuid(),
