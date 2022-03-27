@@ -1,0 +1,29 @@
+_id: req_wrk_f7192424383940ecb791f03d51b8a56f445a4de5
+type: Request
+parentId: wrk_f7192424383940ecb791f03d51b8a56f
+modified: 1648376945688
+created: 1648375046456
+url: "{{ base_url }}/tasks/3/status"
+name: Update task status by ID
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "status": "DONE"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_0a751f9feff141929bb2ac8fdd1d2bcf
+authentication: {}
+metaSortKey: -1648375046456
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

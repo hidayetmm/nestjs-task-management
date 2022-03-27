@@ -1,0 +1,21 @@
+_id: req_wrk_f7192424383940ecb791f03d51b8a56fc54c6761
+type: Request
+parentId: wrk_f7192424383940ecb791f03d51b8a56f
+modified: 1648375134796
+created: 1648375046452
+url: "{{ base_url }}/tasks"
+name: Get all tasks
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1648375046506
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

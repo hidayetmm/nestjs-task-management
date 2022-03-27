@@ -1,0 +1,30 @@
+_id: req_wrk_f7192424383940ecb791f03d51b8a56f63396f69
+type: Request
+parentId: wrk_f7192424383940ecb791f03d51b8a56f
+modified: 1648376062456
+created: 1648375046450
+url: "{{ base_url }}/tasks"
+name: Create task
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "description": "new desc",
+      "title": "new title"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_aee6d79da37048b2b939e25dc56475ce
+authentication: {}
+metaSortKey: -1648375046468.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
