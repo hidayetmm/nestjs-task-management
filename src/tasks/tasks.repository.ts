@@ -1,4 +1,5 @@
+import { EntityRepository, Repository } from 'typeorm';
 import { Task } from './task.entity';
-import { AppDataSource } from '../data-source';
 
-export const tasksRepository = AppDataSource.getRepository(Task);
+@EntityRepository(Task)
+export class TasksRepository extends Repository<Task> {}
