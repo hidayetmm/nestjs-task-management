@@ -11,7 +11,7 @@ import { TasksRepository } from './tasks.repository';
 export class TasksService {
   constructor(
     @InjectRepository(TasksRepository)
-    private usersRepository: TasksRepository,
+    private tasksRepository: TasksRepository,
   ) {}
 
   // getAllTasks(): Task[] {
@@ -40,27 +40,17 @@ export class TasksService {
   //
 
   async getTaskById(id: string): Promise<Task> {
-    const found = await this.usersRepository.findOne(id);
+    const found = await this.tasksRepository.findOne(id);
     if (!found) {
       throw new NotFoundException(`Task with ID "${id}" could not found.`);
     }
     return found;
   }
 
-  //
-  // createTask(createTaskDto: CreateTaskDto): Task {
-  //   const { title, description } = createTaskDto;
-  //   const task: Task = {
-  //     id: uuid(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-  //
-  //   this.tasks.push(task);
-  //   return task;
-  // }
-  //
+  createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksRepository.createTask(createTaskDto);
+  }
+
   // updateTaskStatusById(id: string, status: TaskStatus): Task {
   //   const task = this.getTaskById(id);
   //   task.status = status;
