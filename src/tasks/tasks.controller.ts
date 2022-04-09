@@ -13,6 +13,7 @@ import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { Task } from './task.entity';
+import { DeleteResult } from 'typeorm';
 
 @Controller('tasks')
 export class TasksController {
@@ -38,16 +39,16 @@ export class TasksController {
     return this.tasksService.createTask(createTaskDto);
   }
 
-  // @Patch(':id/status')
-  // updateTaskStatusById(
-  //   @Param('id') id: string,
-  //   @Body('status') status: TaskStatus,
-  // ) {
-  //   return this.tasksService.updateTaskStatusById(id, status);
-  // }
-  //
-  // @Delete(':id')
-  // deleteTaskById(@Param('id') id: string): void {
-  //   return this.tasksService.deleteTaskById(id);
-  // }
+  @Patch(':id/status')
+  updateTaskStatusById(
+    @Param('id') id: string,
+    @Body('status') status: TaskStatus,
+  ): Promise<Task> {
+    return this.tasksService.updateTaskStatusById(id, status);
+  }
+
+  @Delete(':id')
+  deleteTaskById(@Param('id') id: string): Promise<void> {
+    return this.tasksService.deleteTaskById(id);
+  }
 }
