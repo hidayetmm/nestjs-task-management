@@ -5,6 +5,7 @@ import { DeleteResult } from 'typeorm';
 import { Task } from './task.entity';
 import { TasksRepository } from './tasks.repository';
 import { TaskStatus } from './task-status.enum';
+import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 
 @Injectable()
 export class TasksService {
@@ -13,30 +14,9 @@ export class TasksService {
     private tasksRepository: TasksRepository,
   ) {}
 
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
-  // }
-  //
-  // getTasksWithFilters(filterDto: GetTasksFilterDto): Task[] {
-  //   const { status, search } = filterDto;
-  //
-  //   let tasks = this.getAllTasks();
-  //
-  //   if (status) {
-  //     tasks = tasks.filter((task) => task.status === status);
-  //   }
-  //
-  //   if (search) {
-  //     tasks = tasks.filter(
-  //       (task) =>
-  //         task.title.toLowerCase().includes(search.toLowerCase()) ||
-  //         task.description.toLowerCase().includes(search.toLowerCase()),
-  //     );
-  //   }
-  //
-  //   return tasks;
-  // }
-  //
+  getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
+    return this.tasksRepository.getTasks(filterDto);
+  }
 
   async getTaskById(id: string): Promise<Task> {
     const found = await this.tasksRepository.findOne(id);
@@ -53,6 +33,7 @@ export class TasksService {
   async updateTaskStatusById(id: string, status: TaskStatus): Promise<Task> {
     const task = await this.getTaskById(id);
     task.status = status;
+    await this.tasksRepository.save(task);
     return task;
   }
 
