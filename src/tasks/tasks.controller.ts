@@ -17,6 +17,7 @@ import { Task } from './task.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user.decorator';
 import { User } from '../auth/user.entity';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('tasks')
 @UseGuards(AuthGuard())
@@ -24,6 +25,7 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get()
+  @ApiBearerAuth('access-token')
   getTasks(
     @Query() filterDto: GetTasksFilterDto,
     @GetUser() user: User,
