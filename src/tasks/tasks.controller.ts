@@ -25,7 +25,7 @@ export class TasksController {
   constructor(private tasksService: TasksService) {}
 
   @Get()
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth()
   getTasks(
     @Query() filterDto: GetTasksFilterDto,
     @GetUser() user: User,
@@ -34,11 +34,13 @@ export class TasksController {
   }
 
   @Get(':id')
+  @ApiBearerAuth()
   getTaskById(@Param('id') id: string, @GetUser() user: User): Promise<Task> {
     return this.tasksService.getTaskById(id, user);
   }
 
   @Post()
+  @ApiBearerAuth()
   createTask(
     @Body() createTaskDto: CreateTaskDto,
     @GetUser() user: User,
@@ -47,6 +49,7 @@ export class TasksController {
   }
 
   @Patch(':id/status')
+  @ApiBearerAuth()
   updateTaskStatusById(
     @Param('id') id: string,
     @Body('status') status: TaskStatus,
@@ -56,6 +59,7 @@ export class TasksController {
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
   deleteTaskById(
     @Param('id') id: string,
     @GetUser() user: User,
