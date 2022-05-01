@@ -10,7 +10,8 @@ export class AuthCredentialsDto {
   @MinLength(8)
   @MaxLength(32)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Password is too weak.',
+    message:
+      'Password must be minimum 8 characters long, should contain at least one capital letter and number.',
   })
   password: string;
 }
