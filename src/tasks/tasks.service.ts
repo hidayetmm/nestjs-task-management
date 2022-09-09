@@ -6,6 +6,7 @@ import { TasksRepository } from './tasks.repository';
 import { TaskStatus } from './task-status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { User } from '../auth/user.entity';
+import { Equal } from 'typeorm';
 
 @Injectable()
 export class TasksService {
@@ -19,7 +20,9 @@ export class TasksService {
   }
 
   async getTaskById(id: string, user: User): Promise<Task> {
-    const found = await this.tasksRepository.findOne({ where: { id, user } });
+    const found = await this.tasksRepository.findOne({
+      where: { id, user: Equal(user) },
+    });
     if (!found) {
       throw new NotFoundException(`Task with ID "${id}" could not found.`);
     }
@@ -42,7 +45,10 @@ export class TasksService {
   }
 
   async deleteTaskById(id: string, user: User): Promise<void> {
-    const deletedTask = await this.tasksRepository.delete({ id, user });
+    const deletedTask = await this.tasksRepository.delete({
+      id,
+      user: Equal(user),
+    });
     if (!deletedTask.affected) {
       throw new NotFoundException(`Task with ID "${id}" could not found.`);
     }
