@@ -18,11 +18,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user.decorator';
 import { User } from '../auth/user.entity';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('tasks')
-@UseGuards(AuthGuard())
 export class TasksController {
-  constructor(private tasksService: TasksService) {}
+  constructor(private readonly tasksService: TasksService) {}
 
   @Get()
   @ApiBearerAuth()

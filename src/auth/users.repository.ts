@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { PGError } from '../postgres-errors/error-codes.enum';
@@ -6,8 +6,9 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { CustomRepository } from 'src/database/typeorm-ex.decorator';
 
-@EntityRepository(User)
+@CustomRepository(User)
 export class UsersRepository extends Repository<User> {
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<User> {
     const { username, password } = authCredentialsDto;

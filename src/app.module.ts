@@ -4,13 +4,25 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ConfigValidationSchema } from './config.schema';
+import { TypeOrmExModule } from 'src/database/typeorm-ex.module';
+import { UsersRepository } from 'src/auth/users.repository';
+import { TasksRepository } from 'src/tasks/tasks.repository';
+import { AuthController } from 'src/auth/auth.controller';
+import { TasksController } from 'src/tasks/tasks.controller';
+import { AuthService } from 'src/auth/auth.service';
+import { TasksService } from 'src/tasks/tasks.service';
+import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/auth/user.entity';
+import { Task } from 'src/tasks/task.entity';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [`.env.stage.${process.env.STAGE}`],
+      envFilePath: `.env.stage.${process.env.STAGE}`,
       validationSchema: ConfigValidationSchema,
+      isGlobal: true,
     }),
+    AuthModule,
     TasksModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -28,10 +40,13 @@ import { ConfigValidationSchema } from './config.schema';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
+          entities: [User, Task],
         };
       },
     }),
-    AuthModule,
+    TypeOrmExModule.forCustomRepository([UsersRepository, TasksRepository]),
   ],
+  controllers: [AuthController, TasksController],
+  providers: [AuthService, TasksService, JwtService],
 })
 export class AppModule {}
