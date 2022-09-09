@@ -6,18 +6,16 @@ import {
   ConflictException,
   InternalServerErrorException,
 } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
-  async createUser(authCredentialsDto: AuthCredentialsDto): Promise<string> {
+  async createUser(authCredentialsDto: AuthCredentialsDto): Promise<User> {
     const { username, password } = authCredentialsDto;
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const task = this.create({ username, password: hashedPassword });
+    const task = this.create({ username, password });
     try {
-      await this.save(task);
-      return username;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...rest } = await this.save(task);
+      return rest;
     } catch (error) {
       console.log(error);
       if (error.code === PGError.UNIQUE_VIOLATION) {

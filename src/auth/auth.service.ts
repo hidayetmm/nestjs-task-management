@@ -5,7 +5,7 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload.interface';
-import { AuthResponseType } from '../types/return-types';
+import { AuthResponseType } from '../types/return-types/auth-response';
 
 @Injectable()
 export class AuthService {
@@ -18,22 +18,30 @@ export class AuthService {
   async signUp(
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<AuthResponseType> {
-    const username = await this.usersRepository.createUser(authCredentialsDto);
-    const payload: JwtPayload = { username };
+    const user = await this.usersRepository.createUser(authCredentialsDto);
+    const payload: JwtPayload = { username: user.username };
     const accessToken: string = this.jwtService.sign(payload);
-    return { username, accessToken };
+    return { ...user, accessToken };
   }
 
   async signIn(
     authCredentialsDto: AuthCredentialsDto,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<AuthResponseType> {
     const { username, password } = authCredentialsDto;
-    const user = await this.usersRepository.findOne({ username });
+    const user = await this.usersRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.username=:username', { username })
+      .getOne();
+
+    console.log(user);
 
     if (user && (await bcrypt.compare(password, user.password))) {
       const payload: JwtPayload = { username };
       const accessToken: string = this.jwtService.sign(payload);
-      return { accessToken };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...rest } = user;
+      return { ...rest, accessToken };
     } else {
       throw new UnauthorizedException('Please check your login credentials.');
     }
