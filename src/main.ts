@@ -13,10 +13,10 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Task management')
     .setDescription('User can sign up/sign in, CRUD tasks')
-    .setVersion('1.0')
-    // .addTag('')
+    .setVersion('2.0')
+    .setContact('Hidayat Mammadov', null, 'hidayetmmdv@gmail.com')
     .addBearerAuth({
-      description: 'Please enter token in following format: Bearer <JWT>',
+      description: 'Please enter token:',
       name: 'Authorization',
       bearerFormat: 'Bearer',
       scheme: 'Bearer',
