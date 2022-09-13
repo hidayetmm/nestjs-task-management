@@ -14,15 +14,16 @@ import { TasksService } from 'src/tasks/tasks.service';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/auth/user.entity';
 import { Task } from 'src/tasks/task.entity';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    AuthModule,
     ConfigModule.forRoot({
+      isGlobal: true,
       envFilePath: `.env.stage.${process.env.STAGE}`,
       validationSchema: ConfigValidationSchema,
-      isGlobal: true,
     }),
-    AuthModule,
     TasksModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -47,6 +48,5 @@ import { Task } from 'src/tasks/task.entity';
     TypeOrmExModule.forCustomRepository([UsersRepository, TasksRepository]),
   ],
   controllers: [AuthController, TasksController],
-  providers: [AuthService, TasksService, JwtService],
 })
 export class AppModule {}

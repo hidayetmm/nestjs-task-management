@@ -20,9 +20,7 @@ export class AuthService {
   ): Promise<AuthResponseType> {
     const user = await this.usersRepository.createUser(authCredentialsDto);
     const payload: JwtPayload = { username: user.username };
-    const accessToken: string = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET,
-    });
+    const accessToken: string = this.jwtService.sign(payload);
     return { ...user, accessToken };
   }
 
