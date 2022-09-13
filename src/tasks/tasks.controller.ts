@@ -20,11 +20,11 @@ import { User } from '../auth/user.entity';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get()
   @ApiBearerAuth()
   getTasks(

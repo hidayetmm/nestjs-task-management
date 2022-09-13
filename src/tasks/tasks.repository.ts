@@ -5,6 +5,7 @@ import { TaskStatus } from './task-status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { User } from '../auth/user.entity';
 import { CustomRepository } from 'src/database/typeorm-ex.decorator';
+import { UnauthorizedException } from '@nestjs/common';
 
 @CustomRepository(Task)
 export class TasksRepository extends Repository<Task> {
@@ -28,6 +29,7 @@ export class TasksRepository extends Repository<Task> {
 
   async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     const { title, description } = createTaskDto;
+    if (!user) throw new UnauthorizedException('User is not authorized.');
     const task = this.create({
       title,
       description,
