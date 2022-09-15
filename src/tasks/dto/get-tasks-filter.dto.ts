@@ -4,9 +4,9 @@ import { IsOptional, IsString } from 'class-validator';
 export class GetTasksFilterDto {
   @IsString()
   @IsOptional()
-  status: TaskStatus;
+  status?: TaskStatus;
 
   @IsString()
   @IsOptional()
-  search: string;
+  search?: string;
 }

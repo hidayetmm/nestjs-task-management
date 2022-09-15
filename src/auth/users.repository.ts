@@ -12,10 +12,10 @@ import { CustomRepository } from 'src/database/typeorm-ex.decorator';
 export class UsersRepository extends Repository<User> {
   async createUser(authCredentialsDto: AuthCredentialsDto): Promise<User> {
     const { username, password } = authCredentialsDto;
-    const task = this.create({ username, password });
+    const user = this.create({ username, password, role: 'USER' });
     try {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...rest } = await this.save(task);
+      const { role, password, ...rest } = await this.save(user);
       return rest;
     } catch (error) {
       console.log(error);

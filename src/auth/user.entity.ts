@@ -19,6 +19,9 @@ export class User {
   @Column({ select: false })
   password?: string;
 
+  @Column({ select: false })
+  role?: 'USER' | 'ADMIN';
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   @OneToMany((_type) => Task, (task) => task.user, { eager: true })
   tasks: Task[];

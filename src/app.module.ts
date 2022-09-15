@@ -9,22 +9,20 @@ import { UsersRepository } from 'src/auth/users.repository';
 import { TasksRepository } from 'src/tasks/tasks.repository';
 import { AuthController } from 'src/auth/auth.controller';
 import { TasksController } from 'src/tasks/tasks.controller';
-import { AuthService } from 'src/auth/auth.service';
-import { TasksService } from 'src/tasks/tasks.service';
-import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/auth/user.entity';
 import { Task } from 'src/tasks/task.entity';
-import { PassportModule } from '@nestjs/passport';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     AuthModule,
+    UsersModule,
+    TasksModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.stage.${process.env.STAGE}`,
       validationSchema: ConfigValidationSchema,
     }),
-    TasksModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
