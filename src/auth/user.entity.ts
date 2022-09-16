@@ -19,7 +19,7 @@ export class User {
   @Column({ select: false })
   password?: string;
 
-  @Column({ select: false })
+  @Column()
   role?: 'USER' | 'ADMIN';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
