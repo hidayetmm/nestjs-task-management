@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ConfigValidationSchema } from './config.schema';
 import { TypeOrmExModule } from 'src/database/typeorm-ex.module';
-import { UsersRepository } from 'src/auth/users.repository';
+import { UsersRepository } from 'src/users/users.repository';
 import { TasksRepository } from 'src/tasks/tasks.repository';
 import { AuthController } from 'src/auth/auth.controller';
 import { TasksController } from 'src/tasks/tasks.controller';

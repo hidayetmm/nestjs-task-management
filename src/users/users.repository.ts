@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { PGError } from '../postgres-errors/error-codes.enum';
+import { User } from 'src/auth/user.entity';
+import { AuthCredentialsDto } from 'src/auth/dto/auth-credentials.dto';
+import { PGError } from 'src/postgres-errors/error-codes.enum';
 import {
   ConflictException,
   InternalServerErrorException,
