@@ -18,8 +18,11 @@ import { GetUser } from '../auth/get-user.decorator';
 import { User } from '../auth/user.entity';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { RoleGuard } from 'src/guards/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
 
-@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard, RoleGuard)
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
@@ -37,6 +40,16 @@ export class TasksController {
   @ApiBearerAuth()
   getTaskById(@Param('id') id: string, @GetUser() user: User): Promise<Task> {
     return this.tasksService.getTaskById(id, user);
+  }
+
+  @Get('user/:id')
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth()
+  getTasksByUserId(
+    @Param('id') id: string,
+    @GetUser() user: User,
+  ): Promise<Task[]> {
+    return this.tasksService.getTasksByUserId(id, user);
   }
 
   @Post()

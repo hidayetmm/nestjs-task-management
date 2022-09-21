@@ -30,6 +30,18 @@ export class TasksService {
     return found;
   }
 
+  async getTasksByUserId(id: string, user: User): Promise<Task[]> {
+    const found = await this.tasksRepository
+      .createQueryBuilder('task')
+      .where('task.user.id=:id', { id })
+      .getMany();
+
+    if (!found) {
+      throw new NotFoundException(`Task with User ID "${id}" could not found.`);
+    }
+    return found;
+  }
+
   createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
     return this.tasksRepository.createTask(createTaskDto, user);
   }
