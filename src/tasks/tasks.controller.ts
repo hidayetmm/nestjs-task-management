@@ -45,11 +45,8 @@ export class TasksController {
   @Get('user/:id')
   @Roles(Role.ADMIN)
   @ApiBearerAuth()
-  getTasksByUserId(
-    @Param('id') id: string,
-    @GetUser() user: User,
-  ): Promise<Task[]> {
-    return this.tasksService.getTasksByUserId(id, user);
+  getTasksByUserId(@Param('id') id: string): Promise<Task[]> {
+    return this.tasksService.getTasksByUserId(id);
   }
 
   @Post()

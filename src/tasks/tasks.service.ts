@@ -30,7 +30,7 @@ export class TasksService {
     return found;
   }
 
-  async getTasksByUserId(id: string, user: User): Promise<Task[]> {
+  async getTasksByUserId(id: string): Promise<Task[]> {
     const found = await this.tasksRepository
       .createQueryBuilder('task')
       .where('task.user.id=:id', { id })
